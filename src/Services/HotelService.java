@@ -2,13 +2,15 @@ package Services;
 
 import Model.Hotel;
 import repository.HotelRepository;
+import repository.MemoryHotel;
+
 import java.util.List;
 import java.util.Optional;
 
 public class HotelService {
     private final HotelRepository hotelRepository;
 
-    public HotelService(HotelRepository hotelRepository) {
+    public HotelService(MemoryHotel hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
 

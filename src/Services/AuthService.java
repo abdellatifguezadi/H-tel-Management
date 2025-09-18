@@ -28,7 +28,9 @@ public class AuthService {
             throw new IllegalArgumentException("Un compte avec cet email existe déjà");
         }
 
-        Client client = new Client(fullName.trim(), email.toLowerCase(), password);
+        boolean isFirstUser = clientRepository.findAll().isEmpty();
+        Client.Role role = isFirstUser ? Client.Role.ADMIN : Client.Role.CLIENT;
+        Client client = new Client(fullName.trim(), email.toLowerCase(), password , role);
         clientRepository.save(client);
         return true;
     }
