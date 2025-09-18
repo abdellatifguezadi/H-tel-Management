@@ -34,7 +34,9 @@ public class AuthService {
     }
 
     public boolean login(String email, String password) {
-        return clientRepository.findByEmail(email.toLowerCase()).filter(client -> client.getPassword().equals(password)).map(client -> {
+        return clientRepository.findByEmail(email.toLowerCase())
+                .filter(client -> client.getPassword().equals(password))
+                .map(client -> {
             currentUser = client;
             return true;
         }).orElse(false);
