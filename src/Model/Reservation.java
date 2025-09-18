@@ -20,6 +20,14 @@ public class Reservation {
         this.nights = nights;
     }
 
+    public Reservation(String hotelId, UUID clientId, int nights){
+        this.id = UUID.randomUUID();
+        this.timestamp = Instant.now();
+        this.hotelId = hotelId;
+        this.clientId = clientId;
+        this.nights = nights;
+    }
+
     public int getNights() {
         return nights;
     }
