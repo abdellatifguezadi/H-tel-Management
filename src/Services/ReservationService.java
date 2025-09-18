@@ -5,13 +5,11 @@ import Model.Hotel;
 import Model.Reservation;
 import repository.HotelRepository;
 import repository.ReservationRepository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * Service de gestion des réservations
- */
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final HotelRepository hotelRepository;
@@ -36,7 +34,7 @@ public class ReservationService {
         }
 
 
-        Optional<Hotel> hotelOptional= hotelRepository.findById(hotelId);
+        Optional<Hotel> hotelOptional = hotelRepository.findById(hotelId);
         if (hotelOptional.isEmpty()) {
             throw new IllegalArgumentException("Hôtel introuvable");
         }
@@ -63,7 +61,7 @@ public class ReservationService {
             throw new IllegalArgumentException("Client requis");
         }
 
-        Optional<Reservation> reservationOptional= reservationRepository.findById(reservationId);
+        Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
             throw new IllegalArgumentException("Réservation introuvable");
         }
@@ -76,7 +74,7 @@ public class ReservationService {
         }
 
 
-        Optional<Hotel> hotelOptional= hotelRepository.findById(reservation.getHotelId());
+        Optional<Hotel> hotelOptional = hotelRepository.findById(reservation.getHotelId());
         if (hotelOptional.isPresent()) {
             Hotel hotel = hotelOptional.get();
             hotel.releaseRoom();
