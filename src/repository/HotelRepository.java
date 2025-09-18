@@ -16,6 +16,8 @@ public interface HotelRepository {
 
     void delete(String hotelId);
 
+    boolean existsById(String hotelId);
+
     List<Hotel> findHotelsAvailable();
 }
 

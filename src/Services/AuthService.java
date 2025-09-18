@@ -1,0 +1,111 @@
+package Services;
+
+import Model.Client;
+import repository.ClientRepository;
+
+public class AuthService {
+
+    private final ClientRepository clientRepository;
+    private Client currentUser;
+
+    public AuthService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
+    public boolean register(String fullName, String email, String password) {
+        if (isInvalidEmail(email)) {
+            throw new IllegalArgumentException("email invalide");
+        }
+        if (isInvalidPassword(password)) {
+            throw new IllegalArgumentException("Le mot de passe doit contenir au moins 6 caractères");
+        }
+
+        if (fullName == null || fullName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom complet ne peut pas être vide");
+        }
+
+        if (clientRepository.existsEmail(email)) {
+            throw new IllegalArgumentException("Un compte avec cet email existe déjà");
+        }
+
+        Client client = new Client(fullName.trim(), email.toLowerCase(), password);
+        clientRepository.save(client);
+        return true;
+    }
+
+    public boolean login(String email, String password) {
+        return clientRepository.findByEmail(email.toLowerCase()).filter(client -> client.getPassword().equals(password)).map(client -> {
+            currentUser = client;
+            return true;
+        }).orElse(false);
+    }
+
+    public void logout() {
+        currentUser = null;
+    }
+
+    public Client getCurrentUser() {
+        return currentUser;
+    }
+
+    public boolean isConnect() {
+        return currentUser != null;
+    }
+
+
+    public boolean updateProfile(String fullName, String email) {
+        if (currentUser == null) {
+            throw new IllegalStateException("Aucun utilisateur connecté");
+        }
+
+        if (isInvalidEmail(email)) {
+            throw new IllegalArgumentException("Email invalide");
+        }
+
+        if (fullName == null || fullName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom complet ne peut pas être vide");
+        }
+
+        // Vérifier l'unicité de l'email (sauf si c'est le même que l'actuel)
+        if (!email.equalsIgnoreCase(currentUser.getEmail()) && clientRepository.existsEmail(email)) {
+            throw new IllegalArgumentException("Un compte avec cet email existe déjà");
+        }
+
+
+        currentUser.setFullName(fullName.trim());
+        currentUser.setEmail(email.toLowerCase());
+        clientRepository.save(currentUser);
+
+        return true;
+    }
+
+
+    public boolean changePassword(String oldPassword, String newPassword) {
+        if (currentUser == null) {
+            throw new IllegalStateException("Aucun utilisateur connecté");
+        }
+
+        if (!currentUser.getPassword().equals(oldPassword)) {
+            throw new IllegalArgumentException("Ancien mot de passe incorrect");
+        }
+
+        if (isInvalidPassword(newPassword)) {
+            throw new IllegalArgumentException("Le nouveau mot de passe doit contenir au moins 6 caractères");
+        }
+
+        currentUser.setPassword(newPassword);
+        clientRepository.save(currentUser);
+        return true;
+    }
+
+
+    public boolean isInvalidEmail(String email) {
+        return email == null || email.trim().isEmpty() || !email.contains("@");
+    }
+
+    public boolean isInvalidPassword(String password) {
+        return password == null || password.length() < 6;
+    }
+
+
+}
