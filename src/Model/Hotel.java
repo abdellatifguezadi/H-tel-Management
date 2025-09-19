@@ -52,15 +52,12 @@ public class Hotel {
     }
 
     public void setAddress(String address) {
-
         this.address = address;
     }
 
     public boolean hasAvailableRooms() {
         return availableRooms > 0;
     }
-
-    ;
 
     public void reserveRoom() {
         if (availableRooms > 0) {

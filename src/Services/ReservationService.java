@@ -3,6 +3,7 @@ package Services;
 import Model.Client;
 import Model.Hotel;
 import Model.Reservation;
+import repository.ClientRepository;
 import repository.HotelRepository;
 import repository.ReservationRepository;
 
@@ -13,10 +14,12 @@ import java.util.UUID;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final HotelRepository hotelRepository;
+    private final ClientRepository clientRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, HotelRepository hotelRepository) {
+    public ReservationService(ReservationRepository reservationRepository, HotelRepository hotelRepository, ClientRepository clientRepository) {
         this.reservationRepository = reservationRepository;
         this.hotelRepository = hotelRepository;
+        this.clientRepository = clientRepository;
     }
 
 
@@ -60,27 +63,21 @@ public class ReservationService {
         if (client == null) {
             throw new IllegalArgumentException("Client requis");
         }
-
         Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
         if (reservationOptional.isEmpty()) {
             throw new IllegalArgumentException("Réservation introuvable");
         }
-
         Reservation reservation = reservationOptional.get();
 
-
-        if (!reservation.getClientId().equals(client.getId())) {
+        if (!client.isAdmin() && !reservation.getClientId().equals(client.getId())) {
             throw new IllegalArgumentException("Vous ne pouvez annuler que vos propres réservations");
         }
-
-
         Optional<Hotel> hotelOptional = hotelRepository.findById(reservation.getHotelId());
         if (hotelOptional.isPresent()) {
             Hotel hotel = hotelOptional.get();
             hotel.releaseRoom();
             hotelRepository.save(hotel);
         }
-
         reservationRepository.delete(reservationId);
         return true;
     }
@@ -98,19 +95,17 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-
-    public List<Reservation> getReservationsById(String hotelId) {
+    public List<Reservation> getReservationsByHotel(String hotelId) {
+        if (hotelId == null || hotelId.trim().isEmpty()) {
+            throw new IllegalArgumentException("ID d'hôtel requis");
+        }
         return reservationRepository.findByHotelId(hotelId);
     }
 
-
-    public boolean reservationExists(UUID reservationId) {
-        return reservationRepository.existById(reservationId);
-    }
-
-
-    public Optional<Reservation> getReservationById(UUID reservationId) {
-        return reservationRepository.findById(reservationId);
+    public String getClientNameById(UUID clientId) {
+        if (clientId == null) return "Inconnu";
+        return clientRepository.findById(clientId)
+                .map(Client::getFullName)
+                .orElse("Inconnu");
     }
 }
-

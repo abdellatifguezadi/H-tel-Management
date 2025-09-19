@@ -19,18 +19,18 @@ public class AuthService {
         if (isInvalidPassword(password)) {
             throw new IllegalArgumentException("Le mot de passe doit contenir au moins 6 caractères");
         }
-
-        if (fullName == null || fullName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Le nom complet ne peut pas être vide");
+        if (isInvalidFullName(fullName)) {
+            throw new IllegalArgumentException("Le nom complet doit contenir au moins 3 caractères");
         }
-
         if (clientRepository.existsEmail(email)) {
             throw new IllegalArgumentException("Un compte avec cet email existe déjà");
         }
 
         boolean isFirstUser = clientRepository.findAll().isEmpty();
+
         Client.Role role = isFirstUser ? Client.Role.ADMIN : Client.Role.CLIENT;
-        Client client = new Client(fullName.trim(), email.toLowerCase(), password , role);
+
+        Client client = new Client(fullName.trim(), email.toLowerCase(), password, role);
         clientRepository.save(client);
         return true;
     }
@@ -39,9 +39,9 @@ public class AuthService {
         return clientRepository.findByEmail(email.toLowerCase())
                 .filter(client -> client.getPassword().equals(password))
                 .map(client -> {
-            currentUser = client;
-            return true;
-        }).orElse(false);
+                    currentUser = client;
+                    return true;
+                }).orElse(false);
     }
 
     public void logout() {
@@ -66,11 +66,10 @@ public class AuthService {
             throw new IllegalArgumentException("Email invalide");
         }
 
-        if (fullName == null || fullName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Le nom complet ne peut pas être vide");
+        if (isInvalidFullName(fullName)) {
+            throw new IllegalArgumentException("Le nom complet ne peut pas être vide et au moins 3 caractères");
         }
 
-        // Vérifier l'unicité de l'email (sauf si c'est le même que l'actuel)
         if (!email.equalsIgnoreCase(currentUser.getEmail()) && clientRepository.existsEmail(email)) {
             throw new IllegalArgumentException("Un compte avec cet email existe déjà");
         }
@@ -104,12 +103,22 @@ public class AuthService {
 
 
     public boolean isInvalidEmail(String email) {
-        return email == null || email.trim().isEmpty() || !email.contains("@");
+        return email == null
+            || !email.contains("@")
+            || !email.contains(".")
+            || email.trim().length() < 5;
     }
 
+
     public boolean isInvalidPassword(String password) {
-        return password == null || password.length() < 6;
+        return password.length() < 6;
     }
+
+
+    public boolean isInvalidFullName(String fullName) {
+        return  fullName.trim().length() < 3;
+    }
+
 
 
 }
