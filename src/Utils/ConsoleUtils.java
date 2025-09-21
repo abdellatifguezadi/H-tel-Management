@@ -9,8 +9,11 @@ public class ConsoleUtils {
     public static String readNonEmptyString(String prompt) {
         String input;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
             input = scanner.nextLine().trim();
+            if("0".equals(input)){
+                return null;
+            }
             if (input.isEmpty()) {
                 System.out.println("Cette valeur ne peut pas être vide. Veuillez réessayer.");
             }
@@ -21,7 +24,12 @@ public class ConsoleUtils {
     public static String readEmail(String prompt) {
         String email;
         do {
-            email = readNonEmptyString(prompt);
+            //email = readNonEmptyString(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
+            email = scanner.nextLine().trim();
+            if("0".equals(email)){
+                return null;
+            }
             if (isInvalidEmail(email)) {
                 System.out.println("Email invalide. Veuillez entrer un email valide.");
             }
@@ -32,8 +40,11 @@ public class ConsoleUtils {
     public static String readPassword(String prompt) {
         String password;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
             password = scanner.nextLine();
+            if("0".equals(password)){
+                return null;
+            }
             if (isInvalidPassword(password)) {
                 System.out.println("Le mot de passe doit contenir au moins 6 caractères.");
             }
@@ -44,9 +55,13 @@ public class ConsoleUtils {
     public static int readPositiveInt(String prompt) {
         int value;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
+
             try {
                 String input = scanner.nextLine().trim();
+                if("0".equals(input)){
+                    return -1;
+                }
                 value = Integer.parseInt(input);
                 if (value <= 0) {
                     System.out.println("Veuillez entrer un nombre positif.");
@@ -62,10 +77,13 @@ public class ConsoleUtils {
     public static int readNonNegativeInt(String prompt) {
         int value;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt + "(ou -1 pour annuler): ");
             try {
                 String input = scanner.nextLine().trim();
                 value = Integer.parseInt(input);
+                if(value == -1){
+                    return -1;
+                }
                 if (value < 0) {
                     System.out.println("Veuillez entrer un nombre non négatif.");
                 }
@@ -98,7 +116,11 @@ public class ConsoleUtils {
     public static UUID readUUID(String prompt) {
         UUID uuid;
         do {
-            String input = readNonEmptyString(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
+            String input = scanner.nextLine().trim();
+            if("0".equals(input)){
+                return null;
+            }
             try {
                 uuid = UUID.fromString(input);
             } catch (IllegalArgumentException e) {
@@ -148,8 +170,11 @@ public class ConsoleUtils {
     public static String readName(String prompt) {
         String fullName;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt + "(ou 0 pour annuler): ");
             fullName = scanner.nextLine();
+            if("0".equals(fullName)){
+                return null;
+            }
             if (isInvalidFullName(fullName)) {
                 System.out.println("Le nom complet doit contenir au moins 3 caractères .");
             }
@@ -158,3 +183,4 @@ public class ConsoleUtils {
     }
 
 }
+

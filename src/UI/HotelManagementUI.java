@@ -37,10 +37,10 @@ public class HotelManagementUI {
 
     private void initializeSampleData() {
 
-            hotelService.createHotel("H1", "Hotel Nador", "Nador rue taouima", 50, 3.5);
-            hotelService.createHotel("H2", "Hotel Marrakech", "Avenue hassan 2", 30, 4.2);
-            hotelService.createHotel("H3", "Hotel Casablanca", "Boulevard d'anfa, Casablanca", 25, 4.8);
-            hotelService.createHotel("H4", "Hotel Fez", "Boulevard Fez, Fez", 22, 4.6);
+        hotelService.createHotel("H1", "Hotel Nador", "Nador rue taouima", 50, 3.5);
+        hotelService.createHotel("H2", "Hotel Marrakech", "Avenue hassan 2", 30, 4.2);
+        hotelService.createHotel("H3", "Hotel Casablanca", "Boulevard d'anfa, Casablanca", 25, 4.8);
+        hotelService.createHotel("H4", "Hotel Fez", "Boulevard Fez, Fez", 22, 4.6);
     }
 
     public void start() {
@@ -63,91 +63,90 @@ public class HotelManagementUI {
     }
 
     private void showPublicMenu() {
-        DisplayUtils.displayMenu("MENU PRINCIPAL",
-                "S'inscrire",
-                "Se connecter",
-                "Quitter");
+        DisplayUtils.displayMenu("MENU PRINCIPAL", "S'inscrire", "Se connecter", "Quitter");
 
-        int choice = ConsoleUtils.readMenuChoice( 1, 3);
+        int choice = ConsoleUtils.readMenuChoice(1, 3);
 
         switch (choice) {
-            case 1 : handleRegister();
-                    break;
-            case 2 : handleLogin();
-                    break;
-            case 3 : running = false;
+            case 1:
+                handleRegister();
+                break;
+            case 2:
+                handleLogin();
+                break;
+            case 3:
+                running = false;
         }
     }
 
     private void showAuthenticatedMenu() {
         Client currentUser = authService.getCurrentUser();
-        DisplayUtils.displayHeader("CONNECTÉ COMME: " + currentUser.getFullName() +
-                                 " (" + (currentUser.isAdmin() ? "ADMIN" : "CLIENT") + ")");
+        DisplayUtils.displayHeader("CONNECTÉ COMME: " + currentUser.getFullName() + " (" + (currentUser.isAdmin() ? "ADMIN" : "CLIENT") + ")");
 
         if (currentUser.isAdmin()) {
-            DisplayUtils.displayMenu("MENU ADMINISTRATEUR",
-                    "Créer un hôtel",
-                    "Modifier un hôtel",
-                    "Supprimer un hôtel",
-                    "Lister tous les hôtels",
-                    "Voir toutes les réservations",
-                    "Annuler une réservation",
-                    "Mon historique de réservations",
-                    "Modifier mon profil",
-                    "Changer mot de passe",
-                    "Se déconnecter");
+            DisplayUtils.displayMenu("MENU ADMINISTRATEUR", "Créer un hôtel", "Modifier un hôtel", "Supprimer un hôtel", "Lister tous les hôtels", "Voir toutes les réservations", "Annuler une réservation", "Mon historique de réservations", "Modifier mon profil", "Changer mot de passe", "Se déconnecter");
 
-            int choice = ConsoleUtils.readMenuChoice( 1, 10);
+            int choice = ConsoleUtils.readMenuChoice(1, 10);
 
             switch (choice) {
-                case 1: handleCreateHotel();
-                        break;
-                case 2: handleUpdateHotel();
-                            break;
-                case 3 : handleDeleteHotel();
-                        break;
-                case 4 : handleListAllHotels();
-                        break;
-                case 5 : handleViewAllReservations();
-                        break;
-                case 6 : handleCancelReservation();
-                        break;
-                case 7 : handleViewMyReservations();
-                        break;
-                case 8 : handleUpdateProfile();
-                        break;
-                case 9 : handleChangePassword();
-                        break;
-                case 10 : handleLogout();
-                        break;
+                case 1:
+                    handleCreateHotel();
+                    break;
+                case 2:
+                    handleUpdateHotel();
+                    break;
+                case 3:
+                    handleDeleteHotel();
+                    break;
+                case 4:
+                    handleListAllHotels();
+                    break;
+                case 5:
+                    handleViewAllReservations();
+                    break;
+                case 6:
+                    handleCancelReservation();
+                    break;
+                case 7:
+                    handleViewMyReservations();
+                    break;
+                case 8:
+                    handleUpdateProfile();
+                    break;
+                case 9:
+                    handleChangePassword();
+                    break;
+                case 10:
+                    handleLogout();
+                    break;
             }
         } else {
-            DisplayUtils.displayMenu("MENU CLIENT",
-                    "Lister les hôtels disponibles",
-                    "Réserver une chambre",
-                    "Annuler une réservation",
-                    "Mon historique de réservations",
-                    "Modifier mon profil",
-                    "Changer mot de passe",
-                    "Se déconnecter");
+            DisplayUtils.displayMenu("MENU CLIENT", "Lister les hôtels disponibles", "Réserver une chambre", "Annuler une réservation", "Mon historique de réservations", "Modifier mon profil", "Changer mot de passe", "Se déconnecter");
 
-            int choice = ConsoleUtils.readMenuChoice( 1, 7);
+            int choice = ConsoleUtils.readMenuChoice(1, 7);
 
             switch (choice) {
-                case 1 : handleListAvailableHotels();
-                        break;
-                case 2 : handleReserveRoom();
-                        break;
-                case 3 : handleCancelReservation();
-                        break;
-                case 4 : handleViewMyReservations();
-                        break;
-                case 5 : handleUpdateProfile();
-                        break;
-                case 6 : handleChangePassword();
-                        break;
-                case 7 : handleLogout();
-                        break;
+                case 1:
+                    handleListAvailableHotels();
+                    break;
+                case 2:
+                    handleReserveRoom();
+                    break;
+                case 3:
+                    handleCancelReservation();
+                    break;
+                case 4:
+                    handleViewMyReservations();
+                    break;
+                case 5:
+                    handleUpdateProfile();
+                    break;
+                case 6:
+                    handleChangePassword();
+                    break;
+                case 7:
+                    handleLogout();
+                    break;
             }
         }
     }
@@ -156,9 +155,22 @@ public class HotelManagementUI {
         DisplayUtils.displayHeader("INSCRIPTION");
 
         try {
-            String fullName = ConsoleUtils.readName("Nom complet: ");
-            String email = ConsoleUtils.readEmail("Email: ");
-            String password = ConsoleUtils.readPassword("Mot de passe (min 6 caractères): ");
+            String fullName = ConsoleUtils.readName("Nom complet ");
+            if(fullName == null) {
+                DisplayUtils.displayInfo("Inscription annulée.");
+                return;
+            }
+            String email = ConsoleUtils.readEmail("Email ");
+            if(email == null) {
+                DisplayUtils.displayInfo("Inscription annulée.");
+                return;
+            }
+            String password = ConsoleUtils.readPassword("Mot de passe (min 6 caractères) ");
+
+            if (password == null) {
+                DisplayUtils.displayInfo("Inscription annulée.");
+                return;
+            }
 
             boolean success = authService.register(fullName, email, password);
             if (success) {
@@ -177,12 +189,20 @@ public class HotelManagementUI {
 
         try {
             String email = ConsoleUtils.readEmail("Email: ");
+            if(email == null) {
+                DisplayUtils.displayInfo("Connexion annulée.");
+                return;
+            }
             String password = ConsoleUtils.readPassword("Mot de passe: ");
+
+            if (password == null) {
+                DisplayUtils.displayInfo("Connexion annulée.");
+                return;
+            }
 
             boolean success = authService.login(email, password);
             if (success) {
-                DisplayUtils.displaySuccess("Connexion réussie! Bienvenue " +
-                                          authService.getCurrentUser().getFullName());
+                DisplayUtils.displaySuccess("Connexion réussie! Bienvenue " + authService.getCurrentUser().getFullName());
             } else {
                 DisplayUtils.displayError("Email ou mot de passe incorrect.");
             }
@@ -195,10 +215,27 @@ public class HotelManagementUI {
         DisplayUtils.displayHeader("CRÉER UN HÔTEL");
 
         try {
-            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel: ");
+            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel ");
+            if (hotelId == null) {
+                DisplayUtils.displayInfo("Création d'hôtel annulée.");
+                return;
+            }
             String name = ConsoleUtils.readNonEmptyString("Nom de l'hôtel: ");
+            if (name == null) {
+                DisplayUtils.displayInfo("Création d'hôtel annulée.");
+                return;
+            }
             String address = ConsoleUtils.readNonEmptyString("Adresse: ");
+            if (address == null) {
+                DisplayUtils.displayInfo("Création d'hôtel annulée.");
+                return;
+            }
             int availableRooms = ConsoleUtils.readPositiveInt("Nombre de chambres disponibles: ");
+            if (availableRooms == -1) {
+                DisplayUtils.displayInfo("Création d'hôtel annulée.");
+                return;
+            }
+
             double rating = ConsoleUtils.readRating("Note (0-5): ");
 
             Hotel hotel = hotelService.createHotel(hotelId, name, address, availableRooms, rating);
@@ -213,7 +250,11 @@ public class HotelManagementUI {
 
         try {
             handleListAllHotels();
-            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel à modifier: ");
+            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel à modifier ");
+            if (hotelId == null) {
+                DisplayUtils.displayInfo("Modification d'hôtel annulée.");
+                return;
+            }
 
             Optional<Hotel> hotelOptional = hotelService.getHotelById(hotelId);
             if (hotelOptional.isEmpty()) {
@@ -224,9 +265,21 @@ public class HotelManagementUI {
             Hotel hotel = hotelOptional.get();
             DisplayUtils.displayInfo("Hôtel actuel: " + hotel.getName());
 
-            String name = ConsoleUtils.readNonEmptyString("Nouveau nom (" + hotel.getName() + "): ");
-            String address = ConsoleUtils.readNonEmptyString("Nouvelle adresse (" + hotel.getAddress() + "): ");
+            String name = ConsoleUtils.readNonEmptyString("Nouveau nom (" + hotel.getName() + ") ");
+            if (name == null) {
+                DisplayUtils.displayInfo("Modification d'hôtel annulée.");
+                return;
+            }
+            String address = ConsoleUtils.readNonEmptyString("Nouvelle adresse (" + hotel.getAddress() + ") ");
+            if (address == null) {
+                DisplayUtils.displayInfo("Modification d'hôtel annulée.");
+                return;
+            }
             int availableRooms = ConsoleUtils.readNonNegativeInt("Nouveau nombre de chambres (" + hotel.getAvailableRooms() + "): ");
+            if (availableRooms == -1) {
+                DisplayUtils.displayInfo("Modification d'hôtel annulée.");
+                return;
+            }
             double rating = ConsoleUtils.readRating("Nouvelle note (" + hotel.getRating() + "): ");
 
             boolean success = hotelService.updateHotel(hotelId, name, address, availableRooms, rating);
@@ -243,7 +296,12 @@ public class HotelManagementUI {
 
         try {
             handleListAllHotels();
-            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel à supprimer: ");
+            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel à supprimer ");
+
+            if (hotelId == null) {
+                DisplayUtils.displayInfo("Suppression d'hôtel annulée.");
+                return;
+            }
 
             Optional<Hotel> hotelOpt = hotelService.getHotelById(hotelId);
             if (hotelOpt.isEmpty()) {
@@ -255,10 +313,10 @@ public class HotelManagementUI {
             DisplayUtils.displayInfo("Hôtel: " + hotel.getName());
 
 
-                boolean success = hotelService.deleteHotel(hotelId);
-                if (success) {
-                    DisplayUtils.displaySuccess("Hôtel supprimé avec succès!");
-                }
+            boolean success = hotelService.deleteHotel(hotelId);
+            if (success) {
+                DisplayUtils.displaySuccess("Hôtel supprimé avec succès!");
+            }
 
         } catch (Exception e) {
             DisplayUtils.displayError(e.getMessage());
@@ -276,13 +334,7 @@ public class HotelManagementUI {
 
         DisplayUtils.displayTableHeader("ID", "Nom", "Adresse", "Chambres Dispo", "Note");
         for (Hotel hotel : hotels) {
-            DisplayUtils.displayTableRow(
-                    hotel.getHotelId(),
-                    hotel.getName(),
-                    hotel.getAddress(),
-                    String.valueOf(hotel.getAvailableRooms()),
-                    String.valueOf( hotel.getRating())
-            );
+            DisplayUtils.displayTableRow(hotel.getHotelId(), hotel.getName(), hotel.getAddress(), String.valueOf(hotel.getAvailableRooms()), String.valueOf(hotel.getRating()));
         }
     }
 
@@ -297,13 +349,7 @@ public class HotelManagementUI {
 
         DisplayUtils.displayTableHeader("ID", "Nom", "Adresse", "Chambres Dispo", "Note");
         for (Hotel hotel : hotels) {
-            DisplayUtils.displayTableRow(
-                    hotel.getHotelId(),
-                    hotel.getName(),
-                    hotel.getAddress(),
-                    String.valueOf(hotel.getAvailableRooms()),
-                    String.valueOf( hotel.getRating())
-            );
+            DisplayUtils.displayTableRow(hotel.getHotelId(), hotel.getName(), hotel.getAddress(), String.valueOf(hotel.getAvailableRooms()), String.valueOf(hotel.getRating()));
         }
     }
 
@@ -319,11 +365,18 @@ public class HotelManagementUI {
                 return;
             }
 
-            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel: ");
+            String hotelId = ConsoleUtils.readNonEmptyString("ID de l'hôtel ");
+            if(hotelId == null) {
+                DisplayUtils.displayInfo("Réservation annulée.");
+                return;
+            }
             int nights = ConsoleUtils.readPositiveInt("Nombre de nuits: ");
+            if(nights == -1) {
+                DisplayUtils.displayInfo("Réservation annulée.");
+                return;
+            }
 
-            Reservation reservation = reservationService.createReservation(
-                    authService.getCurrentUser(), hotelId, nights);
+            Reservation reservation = reservationService.createReservation(authService.getCurrentUser(), hotelId, nights);
 
             DisplayUtils.displaySuccess("Réservation créée avec succès!");
             DisplayUtils.displayInfo("ID de réservation: " + reservation.getId());
@@ -358,18 +411,17 @@ public class HotelManagementUI {
             for (Reservation reservation : reservations) {
                 String dateStr = String.valueOf(reservation.getTimestamp());
                 String clientName = reservationService.getClientNameById(reservation.getClientId());
-                DisplayUtils.displayTableRow(
-                        reservation.getId().toString(),
-                        clientName,
-                        reservation.getHotelId(),
-                        String.valueOf(reservation.getNights()),
-                        dateStr
-                );
+                DisplayUtils.displayTableRow(reservation.getId().toString(), clientName, reservation.getHotelId(), String.valueOf(reservation.getNights()), dateStr);
             }
             UUID reservationId = ConsoleUtils.readUUID("ID de la réservation à annuler: ");
+            if (reservationId == null) {
+                //DisplayUtils.displayError("ID de réservation invalide.");
+                DisplayUtils.displayInfo("Annulation de la réservation annulée.");
+                return;
+            }
             boolean success = reservationService.cancelReservation(reservationId, currentUser);
-            if (success){
-                    DisplayUtils.displaySuccess("Réservation annulée avec succès!");
+            if (success) {
+                DisplayUtils.displaySuccess("Réservation annulée avec succès!");
             }
         } catch (Exception e) {
             DisplayUtils.displayError(e.getMessage());
@@ -391,13 +443,8 @@ public class HotelManagementUI {
             reservations.sort((r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp()));
 
             for (Reservation reservation : reservations) {
-                String dateStr = String.valueOf(reservation.getTimestamp());
-                DisplayUtils.displayTableRow(
-                        String.valueOf(reservation.getId()),
-                        reservation.getHotelId(),
-                        String.valueOf(reservation.getNights()),
-                        dateStr
-                );
+
+                DisplayUtils.displayTableRow(String.valueOf(reservation.getId()), reservation.getHotelId(), String.valueOf(reservation.getNights()), String.valueOf(reservation.getTimestamp()));
             }
         } catch (Exception e) {
             DisplayUtils.displayError(e.getMessage());
@@ -414,20 +461,13 @@ public class HotelManagementUI {
                 return;
             }
 
-            DisplayUtils.displayTableHeader("ID", "Client ID", "Hôtel", "Nuits", "Date");
+            DisplayUtils.displayTableHeader("ID", "Client", "Hôtel", "Nuits", "Date");
 
             reservations.sort((r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp()));
 
             for (Reservation reservation : reservations) {
-                String dateStr = String.valueOf(reservation.getTimestamp());
-
-                DisplayUtils.displayTableRow(
-                        String.valueOf(reservation.getId()),
-                        String.valueOf(reservation.getClientId()),
-                        reservation.getHotelId(),
-                        String.valueOf(reservation.getNights()),
-                        dateStr
-                );
+                String clientName = reservationService.getClientNameById(reservation.getClientId());
+                DisplayUtils.displayTableRow(String.valueOf(reservation.getId()), clientName, reservation.getHotelId(), String.valueOf(reservation.getNights()), String.valueOf(reservation.getTimestamp()));
             }
         } catch (Exception e) {
             DisplayUtils.displayError(e.getMessage());
@@ -443,8 +483,19 @@ public class HotelManagementUI {
             DisplayUtils.displayInfo("Nom: " + currentUser.getFullName());
             DisplayUtils.displayInfo("Email: " + currentUser.getEmail());
 
-            String newFullName = ConsoleUtils.readName("Nouveau nom complet: ");
-            String newEmail = ConsoleUtils.readEmail("Nouvel email: ");
+            String newFullName = ConsoleUtils.readName("Nouveau nom complet ");
+
+            if (newFullName == null) {
+                DisplayUtils.displayInfo("Mise à jour du profil annulée.");
+                return;
+            }
+
+            String newEmail = ConsoleUtils.readEmail("Nouvel email ");
+
+            if(newEmail == null) {
+                DisplayUtils.displayInfo("Mise à jour du profil annulée.");
+                return;
+            }
 
             boolean success = authService.updateProfile(newFullName, newEmail);
             if (success) {
@@ -459,8 +510,16 @@ public class HotelManagementUI {
         DisplayUtils.displayHeader("CHANGER MOT DE PASSE");
 
         try {
-            String oldPassword = ConsoleUtils.readPassword("Ancien mot de passe: ");
-            String newPassword = ConsoleUtils.readPassword("Nouveau mot de passe (min 6 caractères): ");
+            String oldPassword = ConsoleUtils.readPassword("Ancien mot de passe ");
+            if(oldPassword == null) {
+                DisplayUtils.displayInfo("Changement de mot de passe annulé.");
+                return;
+            }
+            String newPassword = ConsoleUtils.readPassword("Nouveau mot de passe (min 6 caractères) ");
+            if(newPassword == null) {
+                DisplayUtils.displayInfo("Changement de mot de passe annulé.");
+                return;
+            }
 
             boolean success = authService.changePassword(oldPassword, newPassword);
             if (success) {
